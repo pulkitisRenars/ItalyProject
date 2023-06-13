@@ -1,2 +1,5 @@
-# ItalyProject
-A task that has been given in Italy to show up reviews on an app and website
+# ItalyTask
+### I am completing a given task that has been given in a internship in Italy
+## The task: 
+#### Create a read reviews system in an app and website (PHP and Ionic Framework) 
+
