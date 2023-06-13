@@ -1,0 +1,96 @@
+To create a google business review system for an app or website use google business review API. Website is made in PHP and app is made in Ionic framework
+
+!!!ALWAYS REMEMBER TO USE YOU ACTUAL API KEY FOR THE CODE AND ALSO GET THE BUSINESS NAME FROM DATABASE.
+
+For Websites#######
+1.  in console:   composer require google/apiclient:^2.0
+
+2. Create a different php file
+
+3. <?php
+    require __DIR__ . '/vendor/autoload.php';
+    
+4. Set up the API key: $client = new \Google\Client();
+                      $client->setApplicationName('Your Application Name');
+                      $client->setApiKey('YOUR_API_KEY');
+                      
+5. Create object for API: $service = new \Google\Service\MyBusiness\Google_Service_MyBusiness($client);
+
+6. Get all of the reviews from a restaurant: $accounts = $service->accounts->listAccounts();
+                                              $account = $accounts->getAccounts()[0]; // Assuming you have only one account
+                                              $reviews = $service->accounts_locations_reviews->listAccountsLocationsReviews($account->name);
+                                              $reviewsList = $reviews->getReviews();
+                                              
+7. Display the reviews(Create it to your own way, this is just an example):
+foreach ($reviewsList as $review) {
+    // Process and display review information (e.g., review text, rating, reviewer name)
+    echo 'Review: ' . $review->comment . '<br>';
+    echo 'Rating: ' . $review->starRating . '<br>';
+    echo 'Reviewer: ' . $review->reviewer->profilePhotoUrl . '<br>';
+}
+
+8. Include the PHP file in your project: <?php
+                                          require_once('google_reviews.php');
+                                         
+                                         
+For Ionic framework##################
+1. Install the necessary in terminal:
+SQL: npx ionic start myapp blank
+bash: cd myapp
+java: npm install @ionic-native/google-maps @ionic-native/http
+
+2. import plugins in different .ts file:
+import { GoogleMaps } from '@ionic-native/google-maps/ngx';
+import { HTTP } from '@ionic-native/http/ngx';
+
+3. include plugins:
+providers: [
+  GoogleMaps,
+  HTTP,
+]
+
+4. Generate a service usin Ionic CLI: 
+ionic generate service google-reviews
+
+5. Import the generated file: 
+import { HTTP } from '@ionic-native/http/ngx';
+
+6. Import method to retrieve the reviews:
+import { Injectable } from '@angular/core';
+import { HTTPResponse } from '@ionic-native/http/ngx';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class GoogleReviewsService {
+  private readonly apiKey = 'YOUR_API_KEY';
+
+  constructor(private http: HTTP) { }
+
+  getBusinessReviews(): Promise<HTTPResponse> {
+    const placeId = 'YOUR_PLACE_ID'; // Replace with your actual place ID
+
+    const url = `https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&fields=reviews&key=${this.apiKey}`;
+
+    return this.http.get(url, {}, {});
+  }
+}
+
+7. open the needed .ts file and import the service:
+import { GoogleReviewsService } from '../services/google-reviews.service';
+
+8. Inject the service in constructor:
+constructor(private googleReviewsService: GoogleReviewsService) { }
+
+9. call the method to get reviews( you can create it how you like according to your needs):
+getGoogleReviews(): void {
+  this.googleReviewsService.getBusinessReviews()
+    .then(response => {
+      console.log(response.data); // Handle the response as needed
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
+
+
