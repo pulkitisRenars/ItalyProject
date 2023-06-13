@@ -2,7 +2,7 @@ To create a google business review system for an app or website use google busin
 
 !!!ALWAYS REMEMBER TO USE YOU ACTUAL API KEY FOR THE CODE AND ALSO GET THE BUSINESS NAME FROM DATABASE.
 
-For Websites#######
+##################For Websites####################
 1.  in console:   composer require google/apiclient:^2.0
 
 2. Create a different php file
@@ -31,9 +31,9 @@ foreach ($reviewsList as $review) {
 
 8. Include the PHP file in your project: <?php
                                           require_once('google_reviews.php');
+#############################################################                                         
                                          
-                                         
-For Ionic framework##################
+#######################For Ionic framework##################
 1. Install the necessary in terminal:
 SQL: npx ionic start myapp blank
 bash: cd myapp
@@ -92,5 +92,5 @@ getGoogleReviews(): void {
       console.error(error);
     });
 }
-
+#############################################################
 
