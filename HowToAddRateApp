@@ -1,0 +1,48 @@
+Here is the tutorial on how to add a rate app system in Ionic Framework for Iphones and Androids
+
+#######################How to add rate system########################
+
+import { Component } from '@angular/core';
+import { AlertController } from '@ionic/angular';
+
+@Component({
+  selector: 'app-home',
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss'],
+})
+export class HomePage {
+
+  constructor(private alertController: AlertController) {}
+
+  async promptRating() {
+    const alert = await this.alertController.create({
+      header: 'Rate Our App',
+      message: 'Please take a moment to rate our app.',
+      buttons: [
+        {
+          text: 'Remind Me Later',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Remind Me Later clicked');
+          }
+        },
+        {
+          text: 'Rate Now',
+          handler: () => {
+            console.log('Rate Now clicked');
+            // Redirect user to the app store for rating
+            // You can use App Rate plugin or open the app store URL directly
+            // Example:
+            // window.open('https://play.google.com/store/apps/details?id=it.eatintime.eatintime.eatintime&hl=it');
+            // if iphone : window.open('https://apps.apple.com/it/app/eat-in-time/id1109737955');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+}
+#######################################################################
